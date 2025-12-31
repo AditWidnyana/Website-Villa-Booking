@@ -9,7 +9,7 @@ sederhana, informatif, dan responsif untuk memudahkan pengguna dalam melihat dan
 | No | Nama Lengkap                        | NIM       | Username GitHub | Peran                                    |
 |----|-------------------------------------|-----------|-----------------|------------------------------------------|
 | 1  | I Komang Aditya Widnyana            | 230040061 | AditWidnyana    | Merapikan Kode dan Troubleshooting error |
-| 2  | Damar                               |           |                 | FrontEnd Developer                       |
+| 2  | Made Damar Sanscarya                | 220040266 |                 | FrontEnd Developer                       |
 
 **Teknologi yang digunakan**
 - HTML 
