@@ -173,7 +173,7 @@ function translateVillaText(text) {
 let villasData = [];
 
 // Load data dari JSON
-fetch("data/villas.json")
+fetch("data/Villas.json")
   .then(response => response.json())
   .then(data => {
     villasData = data;
@@ -223,7 +223,7 @@ function applyFilter() {
 }
 
 function openDetail(id) {
-  window.location.href = `villa-detail.html?id=${id}`;
+  window.location.href = `Villa-detail.html?id=${id}`;
 }
 
 // ===============================
