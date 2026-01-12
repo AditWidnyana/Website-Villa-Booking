@@ -235,7 +235,7 @@ function loadVillaDetail() {
 
   if (!id) return;
 
-  fetch("data/villas.json")
+  fetch("data/Villas.json")
     .then(res => res.json())
     .then(data => {
       const villa = data.find(v => v.id === id);
@@ -272,17 +272,12 @@ function goBooking() {
 }
 
 
-// ===============================
-// Featured Villas (Index Page)
-// ===============================
-// ===============================
-// Featured Villas (Index Page)
-// ===============================
+
 function loadFeaturedVillas() {
   const container = document.getElementById("featuredVillas");
   if (!container) return;
 
-  fetch("data/villas.json")
+  fetch("data/Villas.json")
     .then(res => res.json())
     .then(data => {
       const featured = data.slice(0, 3); // tampilkan 3 villa
