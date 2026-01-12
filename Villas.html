@@ -37,53 +37,44 @@
   <!-- Villas Section -->
   <div class="container mt-5">
     <h2 id="villaPageTitle" class="text-center mb-5 fw-bold">Available Villas</h2>
-    <div class="row g-4">
-      <!-- Ocean View Villa -->
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-          <img src="Media/Villa1.jpeg" class="card-img-top" alt="Ocean View Villa">
-          <div class="card-body">
-            <h5 id="villa1Name" class="card-title fw-semibold">Ocean View Villa</h5>
-            <p id="villa1Price" class="text-primary fw-bold">$200/night</p>
-            <p id="villa1Desc" class="card-text text-muted">
-              Wake up to breathtaking views of the ocean, enjoy a private balcony, and relax in modern interiors designed for comfort.
-            </p>
-            <a href="Villa-detail.html" class="btn btn-outline-primary w-100">View Details</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Garden Retreat Villa -->
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-          <img src="Media/Villa2.jpeg" class="card-img-top" alt="Garden Retreat Villa">
-          <div class="card-body">
-            <h5 id="villa2Name" class="card-title fw-semibold">Garden Retreat Villa</h5>
-            <p id="villa2Price" class="text-primary fw-bold">$150/night</p>
-            <p id="villa2Desc" class="card-text text-muted">
-              Surrounded by lush tropical gardens, this villa offers tranquility, open-air living spaces, and a cozy atmosphere for couples or families.
-            </p>
-            <a href="Villa-detail2.html" class="btn btn-outline-primary w-100">View Details</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Luxury Pool Villa -->
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-          <img src="Media/Villa3.jpeg" class="card-img-top" alt="Luxury Pool Villa">
-          <div class="card-body">
-            <h5 id="villa3Name" class="card-title fw-semibold">Luxury Pool Villa</h5>
-            <p id="villa3Price" class="text-primary fw-bold">$300/night</p>
-            <p id="villa3Desc" class="card-text text-muted">
-              Indulge in ultimate luxury with a private infinity pool, spacious bedrooms, and elegant design perfect for a lavish getaway.
-            </p>
-            <a href="Villa-detail3.html" class="btn btn-outline-primary w-100">View Details</a>
-          </div>
-        </div>
-      </div>
+    <!-- Filter Section -->
+<div class="filter-box mb-4 p-3 rounded shadow-sm">
+  <div class="row g-3">
+    
+    <div class="col-md-4">
+      <select id="filterFeature" class="form-select">
+        <option value="">All Features</option>
+        <option value="ocean_view">Ocean View</option>
+        <option value="garden">Garden</option>
+        <option value="private_pool">Private Pool</option>
+        <option value="luxury">Luxury</option>
+      </select>
     </div>
+
+    <div class="col-md-4">
+      <select id="filterFacility" class="form-select">
+        <option value="">All Facilities</option>
+        <option value="pool">Pool</option>
+        <option value="ac">AC</option>
+        <option value="parking">Parking</option>
+        <option value="bathtub">Bathtub</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <button class="btn btn-primary w-100" onclick="applyFilter()">
+        Filter Villa
+      </button>
+    </div>
+
   </div>
+</div>
+
+<!-- Villa Container -->
+<div class="row g-4" id="villaContainer"></div>
+
+    <!-- Filter dan Villa Container -->
+    <div class="row g-4" id="villaContainer"></div>
 
   <!-- Footer -->
   <footer class="bg-dark text-white text-center p-3 mt-5">

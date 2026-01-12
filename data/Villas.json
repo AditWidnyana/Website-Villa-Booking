@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "Ocean View Villa",
+    "price": 200,
+    "image": "Media/Villa1.jpeg",
+    "features": ["ocean_view", "wifi", "balcony"],
+    "facilities": ["pool", "ac", "parking"],
+    "description": "Ocean view with private balcony and modern interior."
+  },
+  {
+    "id": 2,
+    "name": "Garden Retreat Villa",
+    "price": 150,
+    "image": "Media/Villa2.jpeg",
+    "features": ["garden", "quiet", "wifi"],
+    "facilities": ["ac", "parking"],
+    "description": "Surrounded by tropical garden and peaceful atmosphere."
+  },
+  {
+    "id": 3,
+    "name": "Luxury Pool Villa",
+    "price": 300,
+    "image": "Media/Villa3.jpeg",
+    "features": ["luxury", "private_pool", "wifi"],
+    "facilities": ["pool", "ac", "parking", "bathtub"],
+    "description": "Luxury villa with private pool and elegant interior."
+  }
+]

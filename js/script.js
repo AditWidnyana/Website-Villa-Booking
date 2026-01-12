@@ -1,5 +1,22 @@
+let currentLang = "en";
+
+const villaDictionary = {
+  ocean_view: { en: "Ocean View", id: "Pemandangan Laut" },
+  wifi: { en: "WiFi", id: "WiFi" },
+  balcony: { en: "Balcony", id: "Balkon" },
+  pool: { en: "Swimming Pool", id: "Kolam Renang" },
+  ac: { en: "Air Conditioner", id: "AC" },
+  parking: { en: "Parking Area", id: "Area Parkir" },
+  garden: { en: "Garden View", id: "Pemandangan Taman" },
+  quiet: { en: "Quiet Area", id: "Area Tenang" },
+  luxury: { en: "Luxury Interior", id: "Interior Mewah" },
+  private_pool: { en: "Private Pool", id: "Kolam Renang Pribadi" },
+  bathtub: { en: "Bathtub", id: "Bathtub" }
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const switcher = document.getElementById("languageSwitcher");
+  
 
   const translations = {
     en: {
@@ -106,19 +123,193 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Switch language
-  switcher.addEventListener("change", (e) => {
-    const lang = e.target.value;
-    for (const key in translations[lang]) {
-      const element = document.getElementById(key);
-      if (element) {
-        if (element.tagName === "INPUT" || element.tagName === "TEXTAREA") {
-          element.placeholder = translations[lang][key];
-        } else if (element.tagName === "OPTION") {
-          element.text = translations[lang][key];
-        } else {
-          element.textContent = translations[lang][key];
-        }
+switcher.addEventListener("change", (e) => {
+  currentLang = e.target.value;
+
+  for (const key in translations[currentLang]) {
+    const element = document.getElementById(key);
+    if (element) {
+      if (element.tagName === "INPUT" || element.tagName === "TEXTAREA") {
+        element.placeholder = translations[currentLang][key];
+      } else if (element.tagName === "OPTION") {
+        element.text = translations[currentLang][key];
+      } else {
+        element.textContent = translations[currentLang][key];
       }
     }
-  });
+  }
+
+  // Refresh data villa supaya ikut translate
+  renderVillas(villasData);
+  loadVillaDetail();
+  loadFeaturedVillas();
+
 });
+
+});
+
+
+
+
+function translateVillaText(text) {
+  if (currentLang === "id") {
+    const map = {
+      "Ocean View Villa": "Villa Pemandangan Laut",
+      "Garden Retreat Villa": "Villa Taman Asri",
+      "Luxury Pool Villa": "Villa Kolam Renang Mewah",
+      "Ocean view with private balcony and modern interior.": "Pemandangan laut dengan balkon pribadi dan interior modern.",
+      "Surrounded by tropical garden and peaceful atmosphere.": "Dikelilingi taman tropis dan suasana yang tenang.",
+      "Luxury villa with private pool and elegant interior.": "Villa mewah dengan kolam renang pribadi dan interior elegan."
+    };
+    return map[text] || text;
+  }
+  return text;
+}
+
+
+
+
+
+let villasData = [];
+
+// Load data dari JSON
+fetch("data/villas.json")
+  .then(response => response.json())
+  .then(data => {
+    villasData = data;
+    renderVillas(villasData);
+    loadFeaturedVillas();   // ✅ TAMBAHKAN INI
+  })
+
+  .catch(error => console.error("Error load JSON:", error));
+
+// Tampilkan villa ke halaman
+function renderVillas(villas) {
+  const container = document.getElementById("villaContainer");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  villas.forEach(villa => {
+    container.innerHTML += `
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm villa-card clickable"
+     onclick="openDetail(${villa.id})">
+
+          <img src="${villa.image}" class="card-img-top" alt="${villa.name}">
+          <div class="card-body">
+            <h5 class="fw-bold">${translateVillaText(villa.name)}</h5>
+            <p class="text-primary fw-semibold">$${villa.price}/night</p>
+            <p class="text-muted">${translateVillaText(villa.description)}</p>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function applyFilter() {
+  const feature = document.getElementById("filterFeature").value;
+  const facility = document.getElementById("filterFacility").value;
+
+  let filtered = villasData.filter(villa => {
+    return (
+      (feature === "" || villa.features.includes(feature)) &&
+      (facility === "" || villa.facilities.includes(facility))
+    );
+  });
+
+  renderVillas(filtered);
+}
+
+function openDetail(id) {
+  window.location.href = `villa-detail.html?id=${id}`;
+}
+
+// ===============================
+// DETAIL PAGE HANDLER
+// ===============================
+function loadVillaDetail() {
+  const params = new URLSearchParams(window.location.search);
+  const id = parseInt(params.get("id"));
+
+  if (!id) return;
+
+  fetch("data/villas.json")
+    .then(res => res.json())
+    .then(data => {
+      const villa = data.find(v => v.id === id);
+      if (!villa) return;
+
+      document.getElementById("detailImage").src = villa.image;
+      document.getElementById("detailName").textContent = translateVillaText(villa.name);
+      document.getElementById("detailPrice").textContent = `$${villa.price}/night`;
+     document.getElementById("detailDesc").textContent = translateVillaText(villa.description);
+
+      const featureBox = document.getElementById("detailFeatures");
+      featureBox.innerHTML = "<strong>Features:</strong> ";
+      villa.features.forEach(f => {
+  const label = villaDictionary[f]?.[currentLang] || f;
+  featureBox.innerHTML += `<span class="badge bg-primary me-1">${label}</span>`;
+});
+
+
+      const facilityBox = document.getElementById("detailFacilities");
+      facilityBox.innerHTML = "<strong>Facilities:</strong> ";
+      villa.facilities.forEach(f => {
+  const label = villaDictionary[f]?.[currentLang] || f;
+  facilityBox.innerHTML += `<span class="badge bg-success me-1">${label}</span>`;
+});
+    });
+}
+
+// Auto load ketika halaman detail dibuka
+document.addEventListener("DOMContentLoaded", loadVillaDetail);
+
+// Tombol booking
+function goBooking() {
+  window.location.href = "Book.html";
+}
+
+
+// ===============================
+// Featured Villas (Index Page)
+// ===============================
+// ===============================
+// Featured Villas (Index Page)
+// ===============================
+function loadFeaturedVillas() {
+  const container = document.getElementById("featuredVillas");
+  if (!container) return;
+
+  fetch("data/villas.json")
+    .then(res => res.json())
+    .then(data => {
+      const featured = data.slice(0, 3); // tampilkan 3 villa
+      container.innerHTML = "";
+
+      featured.forEach(villa => {
+        container.innerHTML += `
+          <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm clickable"
+              onclick="openDetail(${villa.id})">
+
+              <img src="${villa.image}" class="card-img-top">
+              <div class="card-body">
+                <h5>${translateVillaText(villa.name)}</h5>
+                <p class="text-muted">${translateVillaText(villa.description)}</p>
+                <p class="fw-semibold text-primary">$${villa.price}/night</p>
+
+                <button class="btn btn-primary w-100">
+                  ${currentLang === "id" ? "Lihat Detail" : "View Details"}
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    })
+    .catch(err => console.error("Featured error:", err));
+}
+
+
